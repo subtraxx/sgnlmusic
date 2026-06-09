@@ -2,7 +2,7 @@
 # IMPORTANT: change `repo` below to your-github-username/your-repo-name after you upload to GitHub.
 backend:
   name: github
-  repo: your-username/sgnlmusic
+  repo: subtraxx/sgnlmusic
   branch: main
 
 site_url: https://sgnlmusic.com
