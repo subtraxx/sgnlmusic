@@ -1,0 +1,68 @@
+# SGNL content settings.
+# IMPORTANT: change `repo` below to your-github-username/your-repo-name after you upload to GitHub.
+backend:
+  name: github
+  repo: your-username/sgnlmusic
+  branch: main
+
+site_url: https://sgnlmusic.com
+display_url: https://sgnlmusic.com
+
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: releases
+    label: Releases
+    files:
+      - name: releases
+        label: Release list
+        file: content/releases.json
+        format: json
+        fields:
+          - name: releases
+            label: Releases
+            label_singular: Release
+            widget: list
+            summary: "{{fields.cat}} — {{fields.title}}"
+            fields:
+              - { name: cat, label: "Catalogue no.", widget: string, hint: "e.g. SGNL005" }
+              - { name: title, label: Title, widget: string }
+              - { name: artist, label: "Artist / note", widget: string, required: false }
+              - { name: genre, label: Genre, widget: select, options: ["Hard Dance", "Trance", "Eurodance", "Techno"] }
+              - { name: status, label: Status, widget: select, options: ["Out now", "Soon"] }
+              - { name: link, label: "Listen link (optional)", widget: string, required: false, hint: "Spotify / Beatport / Bandcamp URL" }
+
+  - name: news
+    label: News
+    files:
+      - name: news
+        label: News ticker
+        file: content/news.json
+        format: json
+        fields:
+          - name: news
+            label: Headlines
+            label_singular: Headline
+            widget: list
+            summary: "{{fields.headline}}"
+            fields:
+              - { name: headline, label: Headline, widget: string }
+              - { name: url, label: "Link (optional)", widget: string, required: false }
+
+  - name: roster
+    label: Roster
+    files:
+      - name: roster
+        label: Roster list
+        file: content/roster.json
+        format: json
+        fields:
+          - name: roster
+            label: Artists
+            label_singular: Artist
+            widget: list
+            summary: "{{fields.name}} — {{fields.meta}}"
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: meta, label: "Detail", widget: string, hint: "e.g. Founder, Signing now, Submit a demo" }
