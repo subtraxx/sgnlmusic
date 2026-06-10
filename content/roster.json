@@ -1,8 +1,8 @@
 {
   "roster": [
-    { "name": "Subtrax", "meta": "Founder" },
-    { "name": "Open Slot", "meta": "Signing now" },
-    { "name": "Open Slot", "meta": "Signing now" },
-    { "name": "You?", "meta": "Submit a demo" }
+    { "name": "Subtrax", "meta": "Founder", "link": "" },
+    { "name": "Open Slot", "meta": "Signing now", "link": "" },
+    { "name": "Open Slot", "meta": "Signing now", "link": "" },
+    { "name": "You?", "meta": "Submit a demo", "link": "" }
   ]
 }

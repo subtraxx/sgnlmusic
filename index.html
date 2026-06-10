@@ -59,8 +59,20 @@
   .nav-links a::after{ content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--neon-grad); transition:width .25s ease; }
   .nav-links a:hover::after, .nav-links a:focus-visible::after{ width:100%; }
 
+  /* mobile menu */
+  .nav-toggle{ display:none; align-items:center; justify-content:center; flex-direction:column; gap:6px; width:40px; height:40px; padding:0; background:transparent; border:0; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .nav-toggle span{ display:block; width:24px; height:2px; background:#fff; transition:transform .3s ease, opacity .2s ease; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform:translateY(8px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
+  .mobile-menu{ position:fixed; inset:0; z-index:55; background:var(--nav-bg); display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .28s ease, visibility .28s ease; }
+  .mobile-menu.open{ opacity:1; visibility:visible; }
+  .mobile-menu nav{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .mobile-menu a{ font-family:"Archivo Expanded","Archivo",sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:-.01em; font-size:clamp(34px,10vw,56px); color:#fff; padding:12px 18px; transition:opacity .2s; }
+  .mobile-menu a:active, .mobile-menu a:focus-visible{ background:var(--neon-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
   /* ===== HERO ===== */
-  .hero{ position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom:clamp(40px,7vh,90px); overflow:hidden; }
+  .hero{ position:relative; min-height:88svh; display:flex; flex-direction:column; justify-content:flex-end; padding-top:clamp(96px,12vh,150px); padding-bottom:clamp(40px,6vh,80px); overflow:hidden; }
   .hero-grid{ position:absolute; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(0,0,0,.045) 1px, transparent 1px); background-size:100% 46px; -webkit-mask-image:linear-gradient(180deg, transparent, #000 30%, #000 60%, transparent); mask-image:linear-gradient(180deg, transparent, #000 30%, #000 60%, transparent); }
   .hero .wrap{ position:relative; z-index:2; width:100%; }
   .hero-coord{ margin-bottom:26px; }
@@ -84,6 +96,7 @@
   @keyframes scroll{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
   section{ position:relative; }
+  #releases, #roster, #about, #demos{ scroll-margin-top:74px; }
   .divide{ border-top:1px solid var(--line); }
   .sec-head{ display:flex; justify-content:space-between; align-items:baseline; gap:24px; flex-wrap:wrap; padding-top:clamp(70px,10vh,130px); }
   .sec-head h2{ font-family:"Archivo Expanded","Archivo",sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(28px,5vw,68px); line-height:.95; letter-spacing:-.01em; color:var(--ink); }
@@ -109,6 +122,8 @@
   .roster-inner{ padding-bottom:clamp(70px,10vh,130px); }
   .names{ margin-top:40px; border-top:1px solid var(--line); }
   .name-row{ display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 2px; border-bottom:1px solid var(--line); cursor:default; transition:padding-left .3s; }
+  a.name-row{ cursor:pointer; }
+  .name-row .n .ext{ font-size:.4em; font-weight:700; margin-left:.55em; vertical-align:.35em; display:inline-block; }
   .name-row:hover{ padding-left:16px; }
   .name-row .n{ font-family:"Archivo Expanded","Archivo",sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(26px,5.5vw,72px); line-height:.9; letter-spacing:-.01em; transition:.25s; color:var(--ink); }
   .name-row:hover .n{ background:var(--neon-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
@@ -157,17 +172,20 @@
   .foot-bottom{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:50px; padding-top:24px; border-top:1px solid var(--line); font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-mute); }
 
   @media (max-width:900px){
+    header.nav{ padding-top:14px; padding-bottom:14px; }
     .nav-links{ display:none; }
-    .rel{ grid-template-columns:64px 1fr auto; gap:14px; }
+    .nav-status{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero{ min-height:auto; justify-content:flex-start; padding-top:96px; padding-bottom:clamp(46px,8vh,72px); }
+    .rel{ grid-template-columns:62px 1fr auto; gap:14px; }
     .rel .genre{ display:none; }
     .manifesto .cols{ grid-template-columns:1fr; gap:26px; }
-    .name-row .meta{ display:none; }
     .demos-grid{ grid-template-columns:1fr; gap:40px; }
   }
   @media (max-width:560px){
-    .nav-status .clock{ display:none; }
-    .rel{ grid-template-columns:54px 1fr; }
-    .rel .state{ display:none; }
+    .rel{ grid-template-columns:54px 1fr auto; gap:12px; }
+    .rel .state{ font-size:10px; padding:4px 8px; }
+    .name-row .meta{ display:none; }
     .scroll-cue{ display:none; }
     .field.row2{ grid-template-columns:1fr; }
   }
@@ -193,7 +211,17 @@
     <span class="onair"><span class="blip" aria-hidden="true"></span>On air</span>
     <span class="clock mono" id="clock">--:--:--</span>
   </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </header>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav aria-label="Mobile menu">
+    <a href="#releases">Releases</a>
+    <a href="#roster">Roster</a>
+    <a href="#about">About</a>
+    <a href="#demos">Demos</a>
+  </nav>
+</div>
 
 <main id="top">
 
@@ -371,10 +399,10 @@
     {headline:"How underground DJs are breaking through in 2026",url:""}
   ];
   var DEF_ROSTER=[
-    {name:"Subtrax",meta:"Founder"},
-    {name:"Open Slot",meta:"Signing now"},
-    {name:"Open Slot",meta:"Signing now"},
-    {name:"You?",meta:"Submit a demo"}
+    {name:"Subtrax",meta:"Founder",link:""},
+    {name:"Open Slot",meta:"Signing now",link:""},
+    {name:"Open Slot",meta:"Signing now",link:""},
+    {name:"You?",meta:"Submit a demo",link:""}
   ];
 
   load('content/releases.json','releases',DEF_REL).then(function(list){
@@ -406,7 +434,11 @@
   load('content/roster.json','roster',DEF_ROSTER).then(function(list){
     var el=document.getElementById('roster-list'); if(!el) return;
     el.innerHTML=list.map(function(p){
-      return '<div class="name-row"><span class="n">'+esc(p.name)+'</span><span class="meta">'+esc(p.meta)+'</span></div>';
+      var hasLink=p.link&&String(p.link).trim();
+      var tag=hasLink?'a':'div';
+      var attr=hasLink?(' href="'+esc(p.link)+'" target="_blank" rel="noopener"'):'';
+      var arrow=hasLink?'<span class="ext" aria-hidden="true">\u2197</span>':'';
+      return '<'+tag+' class="name-row"'+attr+'><span class="n">'+esc(p.name)+arrow+'</span><span class="meta">'+esc(p.meta)+'</span></'+tag+'>';
     }).join('');
   });
 
@@ -421,6 +453,23 @@
       function done(){ form.hidden=true; if(ok){ ok.hidden=false; ok.scrollIntoView({behavior:'smooth',block:'center'}); } }
       fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}).then(done).catch(done);
     });
+  }
+
+  /* mobile menu */
+  var toggle=document.getElementById('navToggle'), menu=document.getElementById('mobileMenu');
+  function setMenu(open){
+    if(!menu||!toggle) return;
+    menu.classList.toggle('open',open);
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
+    menu.setAttribute('aria-hidden',open?'false':'true');
+    document.body.style.overflow=open?'hidden':'';
+  }
+  if(toggle&&menu){
+    toggle.addEventListener('click',function(){ setMenu(!menu.classList.contains('open')); });
+    menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ setMenu(false); }); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') setMenu(false); });
+    window.addEventListener('resize',function(){ if(window.innerWidth>900) setMenu(false); });
   }
 
   document.querySelectorAll('[data-soc]').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); }); });
