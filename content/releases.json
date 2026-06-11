@@ -1,8 +1,12 @@
 {
   "releases": [
-    { "cat": "SGNL001", "title": "First Light", "artist": "Inaugural release", "genre": "Trance", "status": "Out now", "link": "" },
-    { "cat": "SGNL002", "title": "Overdrive", "artist": "Hard dance pressure test", "genre": "Hard Dance", "status": "Out now", "link": "" },
-    { "cat": "SGNL003", "title": "No Curfew", "artist": "Eurodance, re-armed for the club", "genre": "Eurodance", "status": "Soon", "link": "" },
-    { "cat": "SGNL004", "title": "Black Box", "artist": "Late-night techno", "genre": "Techno", "status": "Soon", "link": "" }
+    {
+      "cat": "SGNL001",
+      "title": "Touch",
+      "artist": "Headstorm",
+      "genre": "Eurodance",
+      "status": "Soon",
+      "link": ""
+    }
   ]
 }
